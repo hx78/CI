@@ -1,6 +1,6 @@
 # 1、first 是一个ant入门例子
 执行如下命令测试
-- 1）ant complie
+- 1) ant complie
 - 2) ant run
 - 3) ant clean
 - 4) ant
