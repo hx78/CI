@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="GB2312" ?>  
+<project name="main" default="run" basedir=".">  
+    <property name="src.dir" value="src"/>  
+    <property name="build.dir" value="build"/>  
+    <property name="build.lib" value="${build.dir}/lib"/>  
+    <property name="build.classes" value="${build.dir}/classes"/>  
+  
+   <property name="prop1" value="Property 1 from Buildfile"/>  
+   <property name="prop2" value="Property 2 from Buildfile"/>  
+   <property name="args" value="args"/>  
+  
+    <!-- build directories -->  
+    <target name="prepare">  
+        <mkdir dir="${build.dir}"/>  
+        <mkdir dir="${build.lib}"/>  
+        <mkdir dir="${build.classes}"/>  
+    </target>  
+  
+    <!--javac code-->  
+    <target name="complie" depends="prepare">  
+        <javac srcdir="${src.dir}" destdir="${build.classes}" includeantruntime="on"/>  
+    </target>  
+  
+    <!--java code-->  
+    <target name="run" depends="complie">  
+        <!--<java classname="Project" classpath="${build.classes}"/>  -->
+		
+		<echo message="Now in buildfile..."/>  
+		<echo message="prop1 = ${prop1}"/>  
+		<echo message="prop2 = ${prop2}"/>  
+		<echo message="user.home = ${user.home}"/>   
+  
+		<!-- execute the main() method in a Java class -->  
+		<java classname="Project" classpath="${build.classes}">  
+          <classpath path="."/>  
+          <!-- pass one of the properties -->  
+          <sysproperty key="prop1" value="${prop1}"/>  
+		  <sysproperty key="prop2" value="${prop1}"/>  
+          <sysproperty key="prop3" value="${prop2}"/>  
+          <arg value="${args}"/>  
+        </java>  
+    </target>  
+  
+    <!-- jar code -->  
+    <target name="jar" depends="complie">  
+        <jar jarfile="${build.lib}/Project.jar"   
+                basedir="${build.classes}" >  
+            <manifest>  
+                <attribute name="Main-class"  value="Project"/>  
+            </manifest>  
+        </jar>  
+    </target>  
+  
+    <target name="clean">  
+        <delete dir="${build.dir}"/>  
+    </target>  
+  
+</project>  
